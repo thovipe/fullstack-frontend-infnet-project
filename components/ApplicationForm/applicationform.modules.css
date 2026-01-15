@@ -1,0 +1,80 @@
+.formContainer {
+    width: 100%;
+    height: 100%; /* Changed from 100% to auto */
+    margin: 0;
+    border: solid 1px #0e0e0e;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 1rem;
+    background-color: white;
+    display: flex; /* Add flex */
+    flex-direction: column; /* Stack vertically */
+}
+
+.formContainer:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.inputContainer > div {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.buttonComponent {
+    padding: .75rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
+    border: none;
+    background-color: #1336e8;
+    color: white;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.buttonComponent:hover {
+    background-color: #0f28b8;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem .5rem 1rem 1rem ;
+    width: 85%;
+    height: 100%;
+    font-weight: bold;
+}
+
+.editForm input {
+    margin-bottom: .5rem;
+    padding: .25rem
+
+}
+.editForm button {
+    width: 50%;
+    align-self: auto;
+    border-radius: .5rem;
+    background-color: #0f28b8;
+    color: white;
+    padding: .25rem .5rem .5rem .5rem;
+    cursor: pointer;
+}
+
+.responseContainer {
+    position: absolute;
+    padding: .5rem .5rem .5rem .5rem;
+    margin-top: 400px;
+}

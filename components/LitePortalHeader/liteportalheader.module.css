@@ -1,0 +1,25 @@
+.bgHeader {
+     background-color: black;
+     color: white;
+     border-radius: 1rem;
+
+     display: block;
+}
+
+.logo {
+    margin-left: 91%;
+}
+
+.title {
+     text-align: center;
+}
+
+.button {
+     color: white;
+     margin-bottom: -20px;
+     margin-left: 94%;
+     cursor: pointer;
+     border: none;
+     padding: .5rem;
+     background-color: transparent;
+}

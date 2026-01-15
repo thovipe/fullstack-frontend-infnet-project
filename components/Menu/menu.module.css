@@ -1,0 +1,28 @@
+.menu {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: antiquewhite;
+
+}
+
+a:link {
+    color: blue;
+}
+
+/* visited link */
+a:visited {
+    color: white; /* This changes the color after a visit */
+}
+
+/* mouse over link */
+a:hover {
+    color: red;
+}
+
+/* selected link */
+a:active {
+    color: yellow;
+}

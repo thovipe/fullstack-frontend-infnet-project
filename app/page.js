@@ -1,65 +1,119 @@
-import Image from "next/image";
+'use client';
+
+import "./home.modules.css"
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]/auth'
+import {useActionState} from "react";
+import {useSession} from 'next-auth/react'
+import Login from '../components/Login/login'
+import Logout from '../components/Logout/logout'
+import ApplicationForm from "../components/ApplicationForm";
+import ProjectForm from "../components/ProjectForm";
+import TeamForm from "../components/TeamForm";
+import {createApp} from "../components/ApplicationForm/actions";
 
 export default function Home() {
+
+    const {data: session, status} = useSession();
+
+
+
+    if(status === 'loading') {
+        return (
+            <div>
+                <h2>Loading...</h2>
+            </div>
+        )
+    }
+
+
+    const items = [
+        {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Application name'
+        },
+        {
+            name: 'description',
+            type: 'text',
+            placeholder: 'Application description'
+        },
+        {
+            name: 'appTeamId',
+            type: 'number',
+            placeholder: 'Application team Id'
+        },
+        {
+            name: 'projectId',
+            type: 'number',
+            placeholder: 'Project Id'
+        }
+    ]
+
+    const projectItems = [
+        {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Project name'
+        },
+        {
+            name: 'description',
+            type: 'text',
+            placeholder: 'Project description'
+        },
+        {
+            name: 'ownerName',
+            type: 'text',
+            placeholder: 'Project owner'
+        }
+    ]
+
+    const teamsItems = [
+        {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Team name'
+        },
+        {
+            name: 'description',
+            type: 'text',
+            placeholder: 'Team description'
+        },
+        {
+            name: 'memberIds',
+            type: 'text',
+            placeholder: 'List of members Id, comma separated'
+        }
+    ]
+
+    if (session) {
+        return <div>
+            <div>Your name is {session.user?.name}</div>
+            <div><Logout /></div>
+            <div className="forms-container">
+                <div className="form-wrapper">
+                    <ApplicationForm items={items} buttonTitle={"Create Application"} />
+                </div>
+                <div className="form-wrapper">
+                    <ProjectForm items={projectItems} buttonTitle={"Create Project"} />
+                </div>
+                <div className="form-wrapper">
+                    <TeamForm items={teamsItems} buttonTitle={"Create Team"} />
+                </div>
+            </div>
+        </div>
+    }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      <>
+      <div className="bgHome" >   </div>
+       <div className="homeContainer">
+        <h1>Home</h1>
+        <Login />
+      </div>
+      </>
   );
 }
+
+
+
