@@ -1,5 +1,4 @@
 .bgHome {
- background-image: url('/fundo.jpg');
  background-size: cover;
  filter: blur(.5rem);
  position: fixed;
@@ -8,6 +7,23 @@
  z-index: -1;
  top: 0;
  left: 0;
+}
+
+.homeContainer {
+ display: flex;
+ flex-direction: column;
+ padding: 4rem;
+ align-items: center;
+ }
+
+.homeContainer button {
+ background: #cfcccc;
+ width: 150px;
+ align-self: auto;
+ border-radius: .5rem;
+ border: none;
+ cursor: pointer;
+ font-size: 1rem;
 }
 
 .contentHome {

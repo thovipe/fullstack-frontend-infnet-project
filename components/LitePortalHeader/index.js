@@ -12,7 +12,6 @@ export default async function LitePortalHeader({ children }) {
             <div className={styles.bgHeader}>
                 <header>
                     <Image src={"/liteportal-header-logo.png"} alt={"logo"} width={128} height={100} className={styles.logo}/>
-
                     <h1 className={styles.title}>Lite IDP Portal</h1>
                     <div>{children}</div>
                 </header>
@@ -26,7 +25,7 @@ export default async function LitePortalHeader({ children }) {
         <header>
             <Image src={"/liteportal-header-logo.png"} alt={"logo"} width={128} height={100} className={styles.logo}/>
             <div >
-                <Logout>SignOut</Logout>
+                {session && (<Logout>SignOut</Logout>)}
             </div>
             <h1 className={styles.title}>Lite IDP Portal</h1>
             <div>{children}</div>

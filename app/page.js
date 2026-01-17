@@ -1,22 +1,17 @@
 'use client';
 
 import "./home.modules.css"
-import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/auth'
-import {useActionState} from "react";
 import {useSession} from 'next-auth/react'
 import Login from '../components/Login/login'
 import Logout from '../components/Logout/logout'
 import ApplicationForm from "../components/ApplicationForm";
 import ProjectForm from "../components/ProjectForm";
 import TeamForm from "../components/TeamForm";
-import {createApp} from "../components/ApplicationForm/actions";
+import Search from "../components/Search";
 
 export default function Home() {
 
     const {data: session, status} = useSession();
-
-
 
     if(status === 'loading') {
         return (
@@ -25,7 +20,6 @@ export default function Home() {
             </div>
         )
     }
-
 
     const items = [
         {
@@ -88,8 +82,6 @@ export default function Home() {
 
     if (session) {
         return <div>
-            <div>Your name is {session.user?.name}</div>
-            <div><Logout /></div>
             <div className="forms-container">
                 <div className="form-wrapper">
                     <ApplicationForm items={items} buttonTitle={"Create Application"} />
@@ -100,6 +92,10 @@ export default function Home() {
                 <div className="form-wrapper">
                     <TeamForm items={teamsItems} buttonTitle={"Create Team"} />
                 </div>
+
+            </div>
+            <div>
+                <Search  placeholder={"Type your search here..."}/>
             </div>
         </div>
     }
@@ -108,7 +104,6 @@ export default function Home() {
       <>
       <div className="bgHome" >   </div>
        <div className="homeContainer">
-        <h1>Home</h1>
         <Login />
       </div>
       </>

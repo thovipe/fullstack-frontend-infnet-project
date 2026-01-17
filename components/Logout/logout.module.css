@@ -1,0 +1,9 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin-left: auto;
+    border-radius: 5px;
+    padding: .5rem;
+}

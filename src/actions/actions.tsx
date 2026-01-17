@@ -359,3 +359,42 @@ export async function fetchTeamById(id: number) {
         console.log(message);
     }
 }
+
+export async function searchDoc(prevState, formData: FormData) {
+
+    console.log(formData);
+
+    const searchText = formData.get('search');
+
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return (
+            <div>
+                <h3> User is not authenticated </h3>
+            </div>
+        )
+    }
+
+    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/search?searchText=' + `${searchText}`
+
+    try {
+        const response = await fetch(HTTP_URI, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.accessToken}`
+            }
+        })
+
+        console.log(response)
+        revalidatePath("/");
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+        return (
+            <div>
+                <h3>An error has occur while searching</h3>
+            </div>
+        )
+    }
+}
