@@ -7,7 +7,7 @@ import {EditTeamForm} from "../../components/TeamForm";
 
 export default function TeamCard({item, imageUrl, title, id, buttonTitle, description}) {
     const [isOpen, setIsOpen] = useState(false);
-
+    const link = `/teams/${item.id}`;
     return (
         <div className={styles.teamCard}>
             {imageUrl && <img src={imageUrl} alt={title} className={styles.img}/>}
@@ -32,7 +32,7 @@ export default function TeamCard({item, imageUrl, title, id, buttonTitle, descri
             <div className={styles.cardContent}>
                 <h2 className={styles.cardTitle}>{title}</h2>
                 <p className={styles.cardDescription}>{description}</p>
-                <a href="#" className={styles.cardLink}>Learn More</a>
+                <a href={link} className={styles.cardLink}>Learn More</a>
             </div>
         </div>
     );

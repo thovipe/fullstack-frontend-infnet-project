@@ -7,6 +7,7 @@ import {EditApplicationForm} from "../ApplicationForm"; // Import the CSS file
 
 const Card = ({ title, description, imageUrl, id, item, buttonTitle }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const link = `/applications/${id}`;
     return (
         <div className="card" >
             {imageUrl && <img src={imageUrl} alt={title} className="card-image" />}
@@ -30,7 +31,7 @@ const Card = ({ title, description, imageUrl, id, item, buttonTitle }) => {
             <div className="card-content" >
                 <h2 className="card-title">{title}</h2>
                 <p className="card-description">{description}</p>
-                <a href="#" className="card-link">Learn More</a>
+                <a href={link} className="card-link">Learn More</a>
             </div>
         </div>
     );

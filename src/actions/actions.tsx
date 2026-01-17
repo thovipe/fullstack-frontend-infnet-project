@@ -269,3 +269,93 @@ export async function updateTeam(formData: FormData) {
         throw err;
     }
 }
+
+export async function fetchApplicationById(id: number) {
+
+    const session = await getServerSession(authOptions);
+    if (!session) {
+
+        return (
+            <div>
+                <h3> User is not authenticated </h3>
+            </div>
+            )
+    }
+
+    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/applications/' + `${id}`;
+
+
+    try {
+        const application = await fetch(HTTP_URI, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.accessToken}`
+            }
+        })
+
+        return await application.json();
+    } catch (err) {
+        const message = `Error fetching application id: ${id}`
+        console.log(err);
+        return (
+          <div>
+              <h3>{message}</h3>
+          </div>
+        )
+    }
+}
+
+export async function fetchProjectsById(id: number) {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return (
+            <div>
+                <h3> User is not authenticated </h3>
+            </div>
+        )
+    }
+
+    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/projects/' + `${id}`;
+
+    try {
+        const projects = await fetch(HTTP_URI, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.accessToken}`
+            }
+        })
+        return await projects.json();
+    } catch (err) {
+        const message = `Error fetching projects id: ${id}`
+        console.log(message);
+    }
+}
+
+export async function fetchTeamById(id: number) {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return (
+            <div>
+                <h3> User is not authenticated </h3>
+            </div>
+        )
+    }
+
+    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/appteams/' + `${id}`;
+
+    try {
+        const team = await fetch(HTTP_URI, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.accessToken}`
+            }
+        })
+        return await team.json();
+    } catch (err) {
+        const message = `Error fetching team id: ${id}`
+        console.log(message);
+    }
+}

@@ -7,6 +7,7 @@ import {EditProjectForm} from "../ProjectForm";
 
 const ProjectCard = ({ title, description, imageUrl, id, item, buttonTitle }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const link = `/projects/${id}`;
     return (
         <div className={styles.card} >
             {imageUrl && <img src={imageUrl} alt={title} className={styles.cardImage} />}
@@ -30,7 +31,7 @@ const ProjectCard = ({ title, description, imageUrl, id, item, buttonTitle }) =>
             <div className={styles.cardContent}>
                 <h2 className={styles.cardTitle}>{title}</h2>
                 <p className={styles.cardDescription}>{description}</p>
-                <a href="#" className={styles.cardLink}>Learn More</a>
+                <a href={link} className={styles.cardLink}>Learn More</a>
             </div>
         </div>
     );
