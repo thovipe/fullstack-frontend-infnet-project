@@ -1,6 +1,6 @@
 'use server';
 
-import {AuthOptions, getServerSession} from "next-auth";
+import {AuthOptions, getServerSession, Session} from "next-auth";
 import {authOptions} from "../../app/api/auth/[...nextauth]/auth";
 import {revalidatePath} from "next/cache";
 import {JWT} from "next-auth/jwt";
@@ -85,13 +85,22 @@ export async function createTeam(prevState: any, formData: FormData) {
     }
 }
 
-export async function fetchProjects() {
+export async function fetchProjects(currentPage: number, limit: number) {
     const session = await getServerSession(authOptions)
-    if (!session) {
-        throw (new Error('User is not authenticated'));
+
+    const apiPage = currentPage - 1;
+
+    if (limit <= 0) {
+        limit = 10;
     }
 
-    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/projects';
+    if (!session) {
+       return (
+           <h3>User is not authenticated. </h3>
+       )
+    }
+
+    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/projects?page='+apiPage+'&size='+limit;
     try {
         const response = await fetch(HTTP_URI, {
                 method: 'GET',
@@ -106,7 +115,7 @@ export async function fetchProjects() {
         }
         return await response.json();
     } catch (err) {
-        throw err;
+        console.error(err);
     }
 }
 
@@ -170,13 +179,19 @@ export async function updateProject(formData: FormData) {
     }
 }
 
-export async function fetchTeams(session: JWT) {
+export async function fetchTeams(session: Session ,  currentPage:number, limit: number) {
+
+    const apiPage = currentPage - 1;
+
+    if (limit <= 0) {
+        limit = 10;
+    }
 
     if (!session) {
         throw (new Error('User is not authenticated'));
     }
 
-    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/appteams';
+    const HTTP_URI = `${process.env.HTTP_API_URI}` + '/api/appteams?page='+apiPage+'&size='+limit;
 
     try {
         const response = await fetch(HTTP_URI, {
@@ -190,7 +205,7 @@ export async function fetchTeams(session: JWT) {
             return { success: false, message: `Failed on fetching teams.` };
         }
         if (response.ok) {
-            return response.json();
+            return await response.json();
         }
     } catch (err) {
         throw err;
@@ -398,3 +413,38 @@ export async function searchDoc(prevState, formData: FormData) {
         )
     }
 }
+
+export async function fetchApplication(currentPage: number,limit: number ) {
+
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return (
+            <h3>User is not authenticated </h3>
+        )
+    }
+
+    const apiPage = currentPage - 1;
+
+    if (limit <= 0) {
+        limit = 10;
+    }
+
+    const HTTP_URI = `${process.env.HTTP_API_URI}`+'/api/applications?page='+apiPage+'&size='+limit;
+
+    try {
+        const response = await fetch(HTTP_URI, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.accessToken}`
+            }
+        })
+        return await response.json();
+    }catch(err) {
+        console.log(err);
+        return (
+            <h3>Error while fetching applications.</h3>
+        )
+    }
+}
+

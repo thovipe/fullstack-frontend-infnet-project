@@ -2,6 +2,7 @@ import styles from "./teamId.module.css"
 import {getServerSession} from "next-auth";
 import {authOptions} from "../../api/auth/[...nextauth]/auth";
 import {fetchTeamById} from "../../../src/actions/actions";
+import Login from "../../../components/Login/login";
 
 export default async function teamPage({params}) {
     const numPage = await params;
@@ -10,9 +11,12 @@ export default async function teamPage({params}) {
 
     if (!session) {
         return (
-            <div>
-                User is not authenticated.
-            </div>
+            <>
+                <h2>
+                    User is not authenticated.
+                </h2>
+                <Login></Login>
+            </>
         )
     }
 

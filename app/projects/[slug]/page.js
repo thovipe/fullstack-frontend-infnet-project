@@ -2,6 +2,7 @@ import {fetchProjectsById} from "../../../src/actions/actions";
 import {getServerSession} from "next-auth";
 import {authOptions} from "../../api/auth/[...nextauth]/auth";
 import styles from "./projectId.module.css";
+import Login from "../../../components/Login/login";
 
 export default async function projectPage({params}) {
     const numPage = await params;
@@ -9,9 +10,12 @@ export default async function projectPage({params}) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return (
-            <div>
-                User not authenticated.
-            </div>
+            <>
+                <h2>
+                    User is not authenticated.
+                </h2>
+                <Login></Login>
+            </>
         )
     }
 

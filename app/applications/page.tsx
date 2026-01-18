@@ -5,15 +5,23 @@ import Login from '../../components/Login/login'
 import Card from "../../components/Card";
 import "./applications.modules.css"
 import {fetchApplications, deleteApplication} from "./actions.ts"
+import {PaginationComponent} from "../../components/Pagination";
+import {fetchApplication} from "../../src/actions/actions.tsx";
 
-export default async function applications() {
+
+export default async function applications({searchParams,}: { searchParams?: { page?: string }; }) {
 
     const session = await getServerSession(authOptions)
+    const params = await searchParams;
 
+    const currentPage = Number(params?.page) || 1;
+    const limit = 10;
 
     if (session) {
-        const data = await fetchApplications();
 
+        const data = await fetchApplication(currentPage, limit);
+
+        const totalPages = data.page.totalPages;
         return (
             <div>
 
@@ -23,15 +31,14 @@ export default async function applications() {
                     <div className="cardContainer">
                         {data.content.map((item) => (
                             <div key={item.id}>
-                                <Card title={item.name} description={item.description} imageUrl={"/file.svg"} id={item.id} item={item} buttonTitle={"Edit App"}></Card>
+                                <Card title={item.name} description={item.description} imageUrl={"/file.svg"}
+                                      id={item.id} item={item} buttonTitle={"Edit App"}></Card>
                             </div>
                         ))}
                     </div>
                 </div>
                 <section>
-                    <h3>Search Applications</h3>
-                    <Input placeholder="Search Applications"/>
-                    <button>Search Applications</button>
+                    <PaginationComponent currentPage={currentPage} totalPages={totalPages}/>
                 </section>
 
             </div>
@@ -40,9 +47,9 @@ export default async function applications() {
         return (
             <>
                 <h2>
-                    You are not logged in!
+                    User is not authenticated.
                 </h2>
-                <Login>Click here to login</Login>
+                <Login></Login>
             </>
         );
     }

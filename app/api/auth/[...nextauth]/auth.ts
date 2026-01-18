@@ -3,11 +3,6 @@ import NextAuth, { AuthOptions } from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
 import { JWT } from "next-auth/jwt";
 
-/**
- * Takes a token, and returns a new token with updated
- * `accessToken` and `accessTokenExpires`. If an error occurs,
- * returns the old token and an error property
- */
 async function refreshAccessToken(token: JWT): Promise<JWT> {
     try {
         const response = await fetch(
@@ -119,7 +114,7 @@ export const authOptions: AuthOptions = {
             }
         },
     },
-    debug: process.env.NODE_ENV === "development", // Enable debug logging in development
+    //debug: process.env.NODE_ENV === "development", // Enable debug logging in development
 };
 
 

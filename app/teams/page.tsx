@@ -3,17 +3,33 @@ import {fetchTeams} from "../../src/actions/actions";
 import styles from "./teams.module.css"
 import TeamCard from "../../components/TeamCard";
 import {getServerSession} from "next-auth";
+import {PaginationComponent} from "../../components/Pagination";
+import Login from "../../components/Login/login.tsx";
 
-export default async function teams() {
+export default async function teams({searchParams,}: { searchParams?: { page?: string }; }) {
 
     const session = await getServerSession(authOptions);
+    const params = await searchParams;
+
+    const currentPage = Number(params?.page) || 1;
+    const limit = 10;
+
     if (!session) {
-        throw (new Error('User is not authenticated'));
+       return (
+           <>
+               <h2>
+                   User is not authenticated.
+               </h2>
+               <Login></Login>
+           </>
+       )
     }
 
     try {
-      const data = await fetchTeams(session)
-        return (
+      const data = await fetchTeams(session, currentPage, limit);
+      const totalPages = Number(data.page.totalPages);
+
+      return (
             <div>
                 <div className={styles.teamsFormContainer}>
                     <h3 className={styles.title}>Teams Catalog</h3>
@@ -25,6 +41,9 @@ export default async function teams() {
                     ))}
                     </div>
                 </div>
+                <section>
+                    <PaginationComponent currentPage={currentPage} totalPages={totalPages}></PaginationComponent>
+                </section>
             </div>
         )
     } catch (error) {

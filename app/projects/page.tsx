@@ -5,14 +5,19 @@ import Login from '../../components/Login/login'
 import styles from "./projects.module.css";
 import {fetchProjects} from "../../src/actions/actions";
 import ProjectCard from "../../components/ProjectCard";
+import {PaginationComponent} from "../../components/Pagination";
 
-export default async function projects() {
+export default async function projects({searchParams,}: { searchParams?: { page?: string }; }) {
 
     const session = await getServerSession(authOptions)
+    const params = await searchParams;
+
+    const currentPage = Number(params?.page) || 1;
+    const limit = 10;
 
     if (session) {
-        const data = await fetchProjects();
-
+        const data = await fetchProjects(currentPage, limit);
+        const totalPages = Number(data.page.totalPages);
         return (
             <div>
                 <div className={styles.projectFormContainer}>
@@ -26,9 +31,7 @@ export default async function projects() {
                     </div>
                 </div>
                 <section>
-                    <h3>Search Applications</h3>
-                    <Input placeholder="Search Applications"/>
-                    <button>Search Applications</button>
+                    <PaginationComponent currentPage={currentPage} totalPages={totalPages}></PaginationComponent>
                 </section>
 
             </div>
@@ -37,9 +40,9 @@ export default async function projects() {
         return (
             <>
                 <h2>
-                    You are not logged in!
+                    User is not authenticated.
                 </h2>
-                <Login>Click here to login</Login>
+                <Login></Login>
             </>
         );
     }

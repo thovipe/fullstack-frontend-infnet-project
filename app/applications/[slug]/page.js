@@ -2,6 +2,7 @@ import {fetchApplicationById} from "../../../src/actions/actions";
 import styles from "./applicationId.module.css"
 import {getServerSession} from "next-auth";
 import {authOptions} from "../../api/auth/[...nextauth]/auth";
+import Login from "../../../components/Login/login";
 
 export default async function ApplicationPage({params}) {
 
@@ -10,9 +11,12 @@ export default async function ApplicationPage({params}) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return (
-            <div>
-                User not authenticated.
-            </div>
+            <>
+                <h2>
+                    User is not authenticated.
+                </h2>
+                <Login></Login>
+            </>
         )
     }
 
